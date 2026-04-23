@@ -17,7 +17,7 @@ PAYMENT_TRIGGER = "[READY_FOR_PAYMENT]"
 
 # Browsing agent has NO order_food — it cannot place orders, only help browse
 browsing_agent = create_agent(
-    model=ChatOllama(model="gemma4:31b"),
+    model=ChatOllama(model="gemma4:latest"),
     tools=[get_best_items, search_menu, get_menu_with_prices, get_nutritional_info, check_table_availability],
     system_prompt=(
         "You are a helpful restaurant order expert. Help customers browse the menu, "

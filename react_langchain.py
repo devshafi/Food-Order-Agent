@@ -9,7 +9,7 @@ from tools import (
     order_food,
 )
 
-model = ChatOllama(model="gemma4:31b")
+model = ChatOllama(model="gemma4:latest")
 
 agent = create_agent(
     model=model,
