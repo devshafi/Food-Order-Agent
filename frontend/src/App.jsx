@@ -2,6 +2,20 @@ import { useState, useRef, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkBreaks from "remark-breaks";
 
+const AgentAvatar = () => (
+  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-orange-400 to-red-500 flex items-center justify-center flex-shrink-0 shadow-sm text-base">
+    🍽️
+  </div>
+);
+
+const UserAvatar = () => (
+  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center flex-shrink-0 shadow-sm">
+    <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+      <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
+    </svg>
+  </div>
+);
+
 export default function App() {
   const [messages, setMessages] = useState([]);
   const [history, setHistory] = useState([]);
@@ -63,70 +77,81 @@ export default function App() {
   }
 
   return (
-    <div className="flex flex-col h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-amber-50 to-red-50 flex items-center justify-center p-4">
+    <div className="flex flex-col w-full max-w-2xl h-[90vh] bg-white rounded-2xl shadow-2xl overflow-hidden">
+
       {/* Header */}
-      <header className="bg-white border-b border-gray-200 px-6 py-4 flex items-center gap-3 shadow-sm">
-        <div className="text-2xl">🍽️</div>
-        <div>
-          <h1 className="text-lg font-semibold text-gray-900">Food Order Agent</h1>
-          <p className="text-xs text-gray-400">Order food seamlessly</p>
+      <header className="bg-gradient-to-r from-orange-500 to-red-500 px-6 py-4 shadow-md">
+        <div className="flex flex-col items-center gap-1">
+          <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center text-xl shadow-inner">
+            🍽️
+          </div>
+          <h1 className="text-lg font-bold text-white tracking-tight">Food Order Agent</h1>
+          <div className="flex items-center gap-1.5">
+            <span className="w-2 h-2 rounded-full bg-green-300 animate-pulse" />
+            <span className="text-xs text-orange-100">Online</span>
+          </div>
         </div>
       </header>
 
       {/* Chat */}
-      <div className="flex-1 overflow-y-auto px-4 py-6 space-y-3 max-w-2xl w-full mx-auto">
+      <div className="flex-1 overflow-y-auto px-4 py-6 space-y-4">
         {messages.length === 0 && (
-          <div className="flex flex-col items-center justify-center h-full text-gray-400 gap-2 select-none">
-            <span className="text-4xl">🍕</span>
-            <p className="text-sm">Ask about the menu, prices, or place an order.</p>
+          <div className="flex flex-col items-center justify-center h-full text-orange-300 gap-3 select-none">
+            <span className="text-5xl">🍕</span>
+            <p className="text-sm font-medium text-orange-400">Ask about the menu, prices, or place an order.</p>
           </div>
         )}
 
         {messages.map((m, i) => {
           if (m.role === "payment") {
             return (
-              <div key={i} className="bg-white border-2 border-gray-900 rounded-2xl rounded-bl-sm p-5 max-w-sm shadow-sm space-y-3">
-                <p className="font-semibold text-gray-900 text-sm">💳 Complete Payment</p>
-                <input
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm outline-none focus:border-gray-900 transition"
-                  placeholder="Card Number  1234 5678 9012 3456"
-                  value={card}
-                  onChange={(e) => setCard(e.target.value)}
-                />
-                <div className="flex gap-2 overflow-hidden">
+              <div key={i} className="flex items-start gap-2">
+                <AgentAvatar />
+                <div className="bg-white border-2 border-orange-400 rounded-2xl rounded-tl-sm p-5 max-w-sm shadow-md space-y-3">
+                  <p className="font-bold text-orange-500 text-sm">💳 Complete Payment</p>
                   <input
-                    className="flex-1 min-w-0 border border-gray-300 rounded-lg px-3 py-2 text-sm outline-none focus:border-gray-900 transition"
-                    placeholder="MM/YY"
-                    value={expiry}
-                    onChange={(e) => setExpiry(e.target.value)}
+                    className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-100 transition"
+                    placeholder="Card Number  1234 5678 9012 3456"
+                    value={card}
+                    onChange={(e) => setCard(e.target.value)}
                   />
-                  <input
-                    className="flex-1 min-w-0 border border-gray-300 rounded-lg px-3 py-2 text-sm outline-none focus:border-gray-900 transition"
-                    placeholder="CVV"
-                    type="password"
-                    value={cvv}
-                    onChange={(e) => setCvv(e.target.value)}
-                  />
+                  <div className="flex gap-2 overflow-hidden">
+                    <input
+                      className="flex-1 min-w-0 border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-100 transition"
+                      placeholder="MM/YY"
+                      value={expiry}
+                      onChange={(e) => setExpiry(e.target.value)}
+                    />
+                    <input
+                      className="flex-1 min-w-0 border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-100 transition"
+                      placeholder="CVV"
+                      type="password"
+                      value={cvv}
+                      onChange={(e) => setCvv(e.target.value)}
+                    />
+                  </div>
+                  {payError && <p className="text-red-500 text-xs">{payError}</p>}
+                  <button
+                    onClick={submitPayment}
+                    disabled={paying}
+                    className="w-full bg-gradient-to-r from-orange-500 to-red-500 text-white text-sm font-semibold py-2.5 rounded-lg hover:from-orange-600 hover:to-red-600 disabled:opacity-40 transition cursor-pointer shadow-sm"
+                  >
+                    {paying ? "Processing…" : "Pay Now"}
+                  </button>
                 </div>
-                {payError && <p className="text-red-500 text-xs">{payError}</p>}
-                <button
-                  onClick={submitPayment}
-                  disabled={paying}
-                  className="w-full bg-gray-900 text-white text-sm font-medium py-2.5 rounded-lg hover:bg-gray-700 disabled:opacity-40 transition cursor-pointer"
-                >
-                  {paying ? "Processing…" : "Pay Now"}
-                </button>
               </div>
             );
           }
 
           const isUser = m.role === "user";
           return (
-            <div key={i} className={`flex ${isUser ? "justify-end" : "justify-start"}`}>
-              <div className={`max-w-[75%] px-4 py-2.5 rounded-2xl text-sm leading-relaxed ${
+            <div key={i} className={`flex items-end gap-2 ${isUser ? "flex-row-reverse" : "flex-row"}`}>
+              {isUser ? <UserAvatar /> : <AgentAvatar />}
+              <div className={`max-w-[72%] px-4 py-3 rounded-2xl text-sm leading-relaxed shadow-sm ${
                 isUser
-                  ? "bg-gray-900 text-white rounded-br-sm whitespace-pre-wrap"
-                  : "bg-white border border-gray-200 text-gray-800 rounded-bl-sm shadow-sm prose prose-sm max-w-none"
+                  ? "bg-gradient-to-br from-indigo-500 to-purple-600 text-white rounded-br-sm whitespace-pre-wrap"
+                  : "bg-white border border-orange-100 text-gray-800 rounded-bl-sm prose prose-sm max-w-none"
               }`}>
                 {isUser ? m.content : <ReactMarkdown remarkPlugins={[remarkBreaks]}>{m.content}</ReactMarkdown>}
               </div>
@@ -135,11 +160,12 @@ export default function App() {
         })}
 
         {loading && (
-          <div className="flex justify-start">
-            <div className="bg-white border border-gray-200 rounded-2xl rounded-bl-sm px-4 py-2.5 shadow-sm flex gap-1 items-center">
-              <span className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce [animation-delay:0ms]" />
-              <span className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce [animation-delay:150ms]" />
-              <span className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce [animation-delay:300ms]" />
+          <div className="flex items-end gap-2">
+            <AgentAvatar />
+            <div className="bg-white border border-orange-100 rounded-2xl rounded-bl-sm px-4 py-3 shadow-sm flex gap-1 items-center">
+              <span className="w-2 h-2 bg-orange-400 rounded-full animate-bounce [animation-delay:0ms]" />
+              <span className="w-2 h-2 bg-orange-400 rounded-full animate-bounce [animation-delay:150ms]" />
+              <span className="w-2 h-2 bg-orange-400 rounded-full animate-bounce [animation-delay:300ms]" />
             </div>
           </div>
         )}
@@ -147,10 +173,10 @@ export default function App() {
       </div>
 
       {/* Input */}
-      <div className="bg-white border-t border-gray-200 px-4 py-3">
-        <div className="max-w-2xl mx-auto flex gap-2 items-center">
+      <div className="bg-white border-t border-orange-100 px-4 py-3 shadow-inner">
+        <div className="flex gap-2 items-center">
           <input
-            className="flex-1 bg-gray-100 rounded-xl px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-gray-900 transition disabled:opacity-50"
+            className="flex-1 bg-orange-50 border border-orange-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-orange-300 focus:border-orange-400 transition disabled:opacity-50 placeholder-gray-500 text-gray-800"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && sendMessage()}
@@ -160,12 +186,13 @@ export default function App() {
           <button
             onClick={sendMessage}
             disabled={loading || !input.trim() || paymentPending}
-            className="bg-gray-900 text-white px-5 py-2.5 rounded-xl text-sm font-medium hover:bg-gray-700 disabled:opacity-40 transition cursor-pointer"
+            className="bg-gradient-to-r from-orange-500 to-red-500 text-white px-5 py-2.5 rounded-xl text-sm font-bold hover:from-orange-600 hover:to-red-600 disabled:opacity-50 transition cursor-pointer shadow-sm tracking-wide"
           >
             Send
           </button>
         </div>
       </div>
+    </div>
     </div>
   );
 }
